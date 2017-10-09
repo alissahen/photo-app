@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <title>Photo Gallery App</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/angulargrid.js"></script>
+
+    <script src="https://use.fontawesome.com/b2dff5b91f.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="icon" type="image/png" href="camera-16x16.png" sizes="16x16" />
+</head>
+
+<body ng-app="CatteryApp" id="bodytop">
+    <form class="search">
+        <div class="search-box">
+            <div class="camera"><i class="fa fa-camera-retro fa-lg" aria-hidden="true"></i></div>
+            <input ng-model="catController.filterText" class="search-input" placeholder="Search Images" required/>
+            <button class="search-button" id="searchbtn" ng-click="catController.runSearch()" ng-disabled="!catController.filterText"><i class="fa fa-search fa-lg" aria-hidden="true"></i></button>
+        </div>
+    </form>
+    <div class="category-options" ng-class="{true: 'searched'}[catController.searched]">
+        <div class="text" ng-click="catController.showme=true; catController.searched = false" ng-class="{true:'category-selected'}[catController.showme]">
+            Latest
+        </div>
+        <div class="text" ng-click="catController.showme=false; catController.searched = false" ng-class="{false: 'category-selected'}[catController.showme]">
+            Popular
+        </div>
+    </div>
+
+    <div class="container ng-cloak" when-scrolled>
+        <div class="loading-spinner-container" data-loading>
+            <span class="loading-text">Loading images...</span>
+            <div class="loading-spinner"><i class="fa fa-spinner fa-pulse fa-lg" aria-hidden="true"></i></div>
+        </div>
+        <div ng-show="catController.searchres.hits.length==0" class="no-results">
+            Sorry, no results found for {{catController.filterText}}.
+        </div>
+        <ul class="latest animate-show-hide" id="latest" ng-if="catController.showme && !catController.searched" class="dynamic-grid" angular-grid="catController.latest.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="latest" ag-refresh-on-img-load="true" ag-infinite-scroll="loadMore()">
+            <li class="photo grid" ng-repeat="link in catController.latest.hits | limitTo:catController.limit track by $index" id="viewlatest{{$index}}">
+                <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                <img class="photo" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" />
+            </li>
+        </ul>
+        <ul class="popular animate-show-hide" id="popular" ng-if="!catController.showme && !catController.searched" class="dynamic-grid" angular-grid="catController.photos.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="popular" ag-refresh-on-img-load="true">
+            <li class="photo grid" ng-repeat="link in catController.photos.hits track by $index" id="view{{$index}}">
+                <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                <img class="photo grid-img" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" alt="{{link.tags}}"/>
+            </li>
+        </ul>
+        <ul class="searchres animate-show-hide" id="searchres" ng-if="catController.searched" angular-grid="catController.searchres.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="searchres" ag-refresh-on-img-load="true">
+            <li class="photo grid" ng-repeat="link in catController.searchres.hits | limitTo:catController.limit track by $index" id="viewlatest{{$index}}">
+                <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                <img class="photo" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" alt="{{link.tags}}"/>
+            </li>
+        </ul>
+        <div class="modal" ng-if="!catController.showme && !catController.searched" ng-repeat="link in catController.photos.hits | limitTo:catController.limit track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+            <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
+        </div>
+        <div class="modal" ng-if="catController.showme && !catController.searched" ng-repeat="link in catController.latest.hits | limitTo:catController.limit track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+            <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
+        </div>
+        <div class="modal" ng-if="catController.searched" ng-repeat="link in catController.searchres.hits | limitTo:catController.limit track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+            <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
+        </div>
+    </div>
+    <div id="toTop">
+        <i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true" ng-click="catController.gotoTop()"></i>
+    </div>
+</body>
+
+</html>

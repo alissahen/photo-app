@@ -1,0 +1,48 @@
+/* Global Styling */
+body {background-color: #f1f1f1;}
+select {font-family: 'Raleway', 'arial';}
+span {display: block;}
+
+/* Images */
+.photo{width: 100%; height: auto; display: block; margin: auto; cursor: pointer;}
+
+/* Modal */
+.fa-times {display: none !important;}
+.expand .fa-times {display: block !important; color: #fff; position: fixed; z-index: 2; right: 25px; top:20px; cursor: pointer;}
+.modal {display: none;}
+.container .expand {background-color: rgba(0,0,0,0.5); width: 99%;z-index: 1;position: fixed;height: 98%; display: flex; top: 10px; left: 0;}
+.expand .photo {width: auto; height: auto;}
+
+/* To Top button */
+#toTop {position: fixed; right: 15px; top: 50%; display: none; color: #FAEBD7; cursor: pointer;}
+.show {display: block !important;}
+
+/* Category options */
+.text {font-family: 'raleway'; display: inline-block; padding-right:15px; cursor: pointer;}
+.category-options {line-height: 40px; margin-bottom: 1em; font-size: 16pt; display: flex; justify-content: center;}
+.category-selected {color: #0a88d3; text-decoration: underline;}
+
+/* Search */
+.search-input {border: none; border-radius: 10px 0 0 10px; height: 40px; text-indent: 45px; font-family: 'raleway'; font-size: 12pt; width: 100%;}
+.camera {position: absolute; top: 50%; transform: translateY(-50%); left: 10px;}
+.search-box {display: flex; width: 50%; position: relative;}
+.search-button{display: flex;justify-content: center;align-items: center;background-color: #FAEBD7; width: 50px; height: 40px; border-radius: 0 10px 10px 0; border: 0;}
+.searched .category-selected {color: #000; text-decoration: none;}
+.no-results {display: flex; justify-content: center; font-family: 'lobster'; font-size: 25pt;}
+
+/* Loading */
+.loading-spinner-container {display: flex; justify-content: center; align-items: center;}
+.loading-text {font-family: 'lobster'; font-size: 24pt; padding-right: 15px;}
+
+/* Angular Grid*/
+.dynamic-grid {position: relative; display: none;}
+.dynamic-grid.angular-grid {display: block;}
+.grid {position: absolute; list-style: none; background: #ffffff;; box-sizing: border-box; -webkit-transition: all 400ms ease; transition: all 400ms ease;
+  overflow: hidden;}
+.grid.ng-leave {-webkit-transition: all ease 400ms; transition: all ease 400ms;}
+.grid.ng-leave.ng-leave-active {-webkit-transform: scale(0.5); transform: scale(0.5); opacity: 0;}
+.grid.ng-enter {-webkit-transition: all ease 400ms; transition: all ease 400ms; -webkit-transition-delay: 500ms; transition-delay: 500ms; -webkit-transform: scale(0.5);
+  transform: scale(0.5); opacity: 0;}
+.grid.ng-enter.ng-enter-active {-webkit-transform: scale(1); transform: scale(1); opacity: 1;}
+.grid-img {width: 100%; vertical-align: middle; background-color: #fff; opacity: 0; visibility: hidden;}
+.grid-img.img-loaded {visibility: visible;opacity: 1;}
