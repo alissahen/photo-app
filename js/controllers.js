@@ -52,39 +52,44 @@
 
     }]);
 
-    catController.$inject = ['$http', '$anchorScroll', '$location']
+    catController.$inject = ['$http', '$anchorScroll', '$location', 'imageService']
 
-    function catController($http, $anchorScroll, $location) {
+    function catController($http, $anchorScroll, $location, imageService) {
         var ctrl = this;
-        //ctrl.limit = 5;
         ctrl.filterText;
         ctrl.showme;
-        ctrl.key = '6328373-5c6e8c72d5c0f8883cdd7ea89';
         ctrl.searched = false;
 
-        $http.get('https://pixabay.com/api/?key=' + ctrl.key + '&per_page=200').then(function (response) {
-            ctrl.photos = response.data;
-            //ctrl.limit = 20;
-            //ctrl.showme = false;
-            ctrl.searched = false;
-            console.log(ctrl.photos)
-        });
+        imageService.getPopular()
+            .then(function (response) {
+                ctrl.photos = response.data;
+                console.log(ctrl.photos)
+                ctrl.searched = false;
+                console.log('popular')
+            }, function (error) {
+                $scope.status = 'Unable to get photos: ' + error.message;
+            });
 
-        $http.get('https://pixabay.com/api/?key=' + ctrl.key + '&per_page=200&order=latest').then(function (response) {
-            ctrl.latest = response.data;
-            //ctrl.limit = 20;
-            ctrl.showme = true;
-            ctrl.searched = false;
-            console.log(ctrl.latest)
-        });
+        imageService.getLatest()
+            .then(function (response) {
+                ctrl.latest = response.data;
+                console.log(ctrl.latest)
+                ctrl.showme = true;
+                ctrl.searched = false;
+                console.log('meow')
+            }, function (error) {
+                $scope.status = 'Unable to get photos: ' + error.message;
+            });
+
 
         ctrl.runSearch = function () {
-            $http.get('https://pixabay.com/api/?key=' + ctrl.key + '&q=' + encodeURIComponent(ctrl.filterText) + '&image_type=photo&per_page=200').then(function (response) {
-                ctrl.searchres = response.data;
-                ctrl.status = response.status;
-                //ctrl.limit = 20;
-                ctrl.searched = true;
-            });
+            imageService.search(ctrl.filterText)
+                .then(function (response) {
+                    ctrl.searchres = response.data;
+                    ctrl.status = response.status;
+                    //ctrl.limit = 20;
+                    ctrl.searched = true;
+                });
         };
 
         ctrl.gotoTop = function () {

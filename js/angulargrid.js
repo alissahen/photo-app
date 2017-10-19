@@ -299,7 +299,6 @@
             }
 
             function infiniteScroll(scrollTop) {
-                console.log(scope.model)
               if (scrollNs.isLoading || !scope.model.length) return;
               var scrollHeight = scrollNs.scrollContInfo.scrollHeight,
                 contHeight = scrollNs.scrollContInfo.height;
