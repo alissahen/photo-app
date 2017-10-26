@@ -1,7 +1,7 @@
 ;
 (function () {
     angular
-        .module('CatteryApp')
+        .module('PhotoApp')
         .directive('whenScrolled', whenScrolled)
 
     whenScrolled.$inject = ['$window']
@@ -31,7 +31,7 @@
     };
 
     angular
-        .module('CatteryApp')
+        .module('PhotoApp')
         .directive('loading', ['$http', function ($http)
             {
                 return {

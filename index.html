@@ -17,7 +17,7 @@
     <link rel="icon" type="image/png" href="camera-16x16.png" sizes="16x16" />
 </head>
 
-<body ng-app="CatteryApp" id="bodytop">
+<body ng-app="PhotoApp" id="bodytop">
     <form class="search">
         <div class="search-box">
             <div class="camera"><i class="fa fa-camera-retro fa-lg" aria-hidden="true"></i></div>
@@ -43,7 +43,7 @@
             Sorry, no results found for {{catController.filterText}}.
         </div>
         <ul class="latest animate-show-hide" id="latest" ng-if="catController.showme && !catController.searched" class="dynamic-grid" angular-grid="catController.latest.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="latest" ag-refresh-on-img-load="true" ag-infinite-scroll="loadMore()">
-            <li class="photo grid" ng-repeat="link in catController.latest.hits | limitTo:catController.limit track by $index" id="viewlatest{{$index}}">
+            <li class="photo grid" ng-repeat="link in catController.latest.hits track by $index" id="viewlatest{{$index}}">
                 <i class="fa fa-times fa-2x" aria-hidden="true"></i>
                 <img class="photo" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" />
             </li>
@@ -55,20 +55,20 @@
             </li>
         </ul>
         <ul class="searchres animate-show-hide" id="searchres" ng-if="catController.searched" angular-grid="catController.searchres.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="searchres" ag-refresh-on-img-load="true">
-            <li class="photo grid" ng-repeat="link in catController.searchres.hits | limitTo:catController.limit track by $index" id="viewlatest{{$index}}">
+            <li class="photo grid" ng-repeat="link in catController.searchres.hits track by $index" id="viewlatest{{$index}}">
                 <i class="fa fa-times fa-2x" aria-hidden="true"></i>
                 <img class="photo" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" alt="{{link.tags}}"/>
             </li>
         </ul>
-        <div class="modal" ng-if="!catController.showme && !catController.searched" ng-repeat="link in catController.photos.hits | limitTo:catController.limit track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+        <div class="modal" ng-if="!catController.showme && !catController.searched" ng-repeat="link in catController.photos.hits track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
             <i class="fa fa-times fa-2x" aria-hidden="true"></i>
             <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
         </div>
-        <div class="modal" ng-if="catController.showme && !catController.searched" ng-repeat="link in catController.latest.hits | limitTo:catController.limit track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+        <div class="modal" ng-if="catController.showme && !catController.searched" ng-repeat="link in catController.latest.hits track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
             <i class="fa fa-times fa-2x" aria-hidden="true"></i>
             <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
         </div>
-        <div class="modal" ng-if="catController.searched" ng-repeat="link in catController.searchres.hits | limitTo:catController.limit track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+        <div class="modal" ng-if="catController.searched" ng-repeat="link in catController.searchres.hits track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
             <i class="fa fa-times fa-2x" aria-hidden="true"></i>
             <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
         </div>

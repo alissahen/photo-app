@@ -1,6 +1,6 @@
 ;
 (function () {
-    angular.module('CatteryApp')
+    angular.module('PhotoApp')
         .factory('imageService', ImageService)
 
     ImageService.$inject = ['$http']

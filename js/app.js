@@ -1,1 +1,1 @@
-angular.module('CatteryApp', ['ngAnimate','angularGrid']);
+angular.module('PhotoApp', ['ngAnimate','angularGrid']);
