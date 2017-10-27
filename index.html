@@ -26,11 +26,11 @@
         </div>
     </form>
     <div class="category-options" ng-class="{true: 'searched'}[catController.searched]">
-        <div class="text" ng-click="catController.showme=true; catController.searched = false" ng-class="{true:'category-selected'}[catController.showme]">
-            Latest
-        </div>
-        <div class="text" ng-click="catController.showme=false; catController.searched = false" ng-class="{false: 'category-selected'}[catController.showme]">
+        <div class="text" ng-click="catController.showme=true; catController.searched = false" ng-class="{true: 'category-selected'}[catController.showme]">
             Popular
+        </div>
+        <div class="text" ng-click="catController.showme=false; catController.searched = false" ng-class="{false:'category-selected'}[catController.showme]">
+            Latest
         </div>
     </div>
 
@@ -42,29 +42,53 @@
         <div ng-show="catController.searchres.hits.length==0" class="no-results">
             Sorry, no results found for {{catController.filterText}}.
         </div>
-        <ul class="latest animate-show-hide" id="latest" ng-if="catController.showme && !catController.searched" class="dynamic-grid" angular-grid="catController.latest.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="latest" ag-refresh-on-img-load="true" ag-infinite-scroll="loadMore()">
-            <li class="photo grid" ng-repeat="link in catController.latest.hits track by $index" id="viewlatest{{$index}}">
+        <ul class="popular animate-show-hide" id="popular" ng-if="catController.showme && !catController.searched" class="dynamic-grid" angular-grid="catController.photos.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="popular" ag-refresh-on-img-load="true">
+            <li class="photo grid" ng-repeat="link in catController.photos.hits track by $index" id="view{{$index}}" ng-mouseover="catController.hoverIn($index)" ng-mouseleave="catController.hoverOut($index)">
                 <i class="fa fa-times fa-2x" aria-hidden="true"></i>
-                <img class="photo" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" />
+                <img class="photo grid-img" ng-src="{{link.webformatURL}}" title="View the photo by {{link.user}}" alt="{{link.tags}}" />
+                <div class="overlay"  ng-click="catController.zoom($index)">
+                    <div class="overlay_info">
+                        <span class="user">User: {{link.user}}</span>
+                        <span class="tags">Tags: {{link.tags}}</span>
+                        <span class="views" ng-if="link.views != 0"><i class="fa fa-eye" aria-hidden="true"></i> {{link.views}}</span>
+                        <span class="likes" ng-if="link.likes != 0"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i> {{link.likes}}</span>
+                    </div>
+                </div>
             </li>
         </ul>
-        <ul class="popular animate-show-hide" id="popular" ng-if="!catController.showme && !catController.searched" class="dynamic-grid" angular-grid="catController.photos.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="popular" ag-refresh-on-img-load="true">
-            <li class="photo grid" ng-repeat="link in catController.photos.hits track by $index" id="view{{$index}}">
+        <ul class="latest animate-show-hide" id="latest" ng-if="!catController.showme && !catController.searched" class="dynamic-grid" angular-grid="catController.latest.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="latest" ag-refresh-on-img-load="true">
+            <li class="photo grid photo-cont" ng-repeat="link in catController.latest.hits track by $index" id="view{{$index}}" ng-mouseover="catController.hoverIn($index)" ng-mouseleave="catController.hoverOut($index)">
                 <i class="fa fa-times fa-2x" aria-hidden="true"></i>
-                <img class="photo grid-img" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" alt="{{link.tags}}"/>
+                <img class="photo grid-img" ng-src="{{link.webformatURL}}" title="View the photo by {{link.user}}" alt="{{link.tags}}" />
+                <div class="overlay"  ng-click="catController.zoom($index)">
+                    <div class="overlay_info">
+                        <span class="user">User: {{link.user}}</span>
+                        <span class="tags">Tags: {{link.tags}}</span>
+                        <span class="views" ng-if="link.views != 0"><i class="fa fa-eye" aria-hidden="true"></i> {{link.views}}</span>
+                        <span class="likes" ng-if="link.likes != 0"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i> {{link.likes}}</span>
+                    </div>
+                </div>
             </li>
         </ul>
         <ul class="searchres animate-show-hide" id="searchres" ng-if="catController.searched" angular-grid="catController.searchres.hits" ag-grid-width="400" ag-gutter-size="5" ag-angular-grid-id="searchres" ag-refresh-on-img-load="true">
-            <li class="photo grid" ng-repeat="link in catController.searchres.hits track by $index" id="viewlatest{{$index}}">
+            <li class="photo grid" ng-repeat="link in catController.searchres.hits track by $index" id="view{{$index}}" ng-mouseover="catController.hoverIn($index)" ng-mouseleave="catController.hoverOut($index)">
                 <i class="fa fa-times fa-2x" aria-hidden="true"></i>
-                <img class="photo" ng-src="{{link.webformatURL}}" ng-click="catController.zoom($index)" title="View the photo by {{link.user}}" alt="{{link.tags}}"/>
+                <img class="photo grid-img" ng-src="{{link.webformatURL}}" title="View the photo by {{link.user}}" alt="{{link.tags}}" />
+                <div class="overlay" ng-click="catController.zoom($index)" >
+                    <div class="overlay_info">
+                        <span class="user">User: {{link.user}}</span>
+                        <span class="tags">Tags: {{link.tags}}</span>
+                        <span class="views" ng-if="link.views != 0"><i class="fa fa-eye" aria-hidden="true"></i> {{link.views}}</span>
+                        <span class="likes" ng-if="link.likes != 0"><i class="fa fa-thumbs-o-up fa-lg" aria-hidden="true"></i> {{link.likes}}</span>
+                    </div>
+                </div>
             </li>
         </ul>
-        <div class="modal" ng-if="!catController.showme && !catController.searched" ng-repeat="link in catController.photos.hits track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+        <div class="modal" ng-if="catController.showme && !catController.searched" ng-repeat="link in catController.photos.hits track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
             <i class="fa fa-times fa-2x" aria-hidden="true"></i>
             <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
         </div>
-        <div class="modal" ng-if="catController.showme && !catController.searched" ng-repeat="link in catController.latest.hits track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
+        <div class="modal" ng-if="!catController.showme && !catController.searched" ng-repeat="link in catController.latest.hits track by $index" ng-click="catController.zoom($index)" id="view-{{$index}}">
             <i class="fa fa-times fa-2x" aria-hidden="true"></i>
             <img class="photo" ng-src="{{link.webformatURL}}" alt="{{link.tags}}" />
         </div>
@@ -75,6 +99,9 @@
     </div>
     <div id="toTop">
         <i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true" ng-click="catController.gotoTop()"></i>
+    </div>
+    <div class="pixabay">
+        <a href="https://pixabay.com"><img class="pixabay_logo" src="logo.svg"></a>
     </div>
 </body>
 

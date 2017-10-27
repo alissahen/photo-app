@@ -1,10 +1,16 @@
 /* Global Styling */
-body {background-color: #f1f1f1;}
+body {background-color: #f1f1f1; position: relative;}
 select {font-family: 'Raleway', 'arial';}
 span {display: block;}
 
 /* Images */
 .photo{width: 100%; height: auto; display: block; margin: auto; cursor: pointer;}
+.overlay {position: absolute; top:0; background: rgba(0,0,0,.3); display: flex; justify-content: center; align-items: center; height:100%; width:100%; display: none;}
+.hover .overlay {display: flex;}
+.user,.tags,.views,.likes {color:#fff; font-family:'raleway'; font-size: 20px; padding-bottom:10px;}
+.views,.likes {display: inline-block; padding-right:20px;}
+.pixabay_logo {width:150px; height:auto; opacity: .5;}
+.pixabay {position: absolute; bottom: -30px;}
 
 /* Modal */
 .fa-times {display: none !important;}
@@ -44,5 +50,5 @@ span {display: block;}
 .grid.ng-enter {-webkit-transition: all ease 400ms; transition: all ease 400ms; -webkit-transition-delay: 500ms; transition-delay: 500ms; -webkit-transform: scale(0.5);
   transform: scale(0.5); opacity: 0;}
 .grid.ng-enter.ng-enter-active {-webkit-transform: scale(1); transform: scale(1); opacity: 1;}
-.grid-img {width: 100%; vertical-align: middle; background-color: #fff; opacity: 0; visibility: hidden;}
+.grid-img {width: 100%; vertical-align: middle; background-color: #fff; opacity: 0; visibility: hidden; position: relative;}
 .grid-img.img-loaded {visibility: visible;opacity: 1;}

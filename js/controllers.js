@@ -16,12 +16,10 @@
         return directive;
 
         function link(scope, elm, attr, ctrl) {
-            // scope.limit = 5;
             var btn = document.getElementById('toTop');
             var raw = elm[0];
             angular.element($window).bind('scroll', function () {
                 if ($window.scrollY + $window.innerHeight >= raw.offsetHeight) {
-                    // ctrl.limit = ctrl.limit + 20;
                 } else if ($window.scrollY > 250) {
                     angular.element(toTop).addClass('show');
                 }
@@ -63,9 +61,8 @@
         imageService.getPopular()
             .then(function (response) {
                 ctrl.photos = response.data;
-                console.log(ctrl.photos)
+                ctrl.showme = true;
                 ctrl.searched = false;
-                console.log('popular')
             }, function (error) {
                 $scope.status = 'Unable to get photos: ' + error.message;
             });
@@ -73,14 +70,10 @@
         imageService.getLatest()
             .then(function (response) {
                 ctrl.latest = response.data;
-                console.log(ctrl.latest)
-                ctrl.showme = true;
                 ctrl.searched = false;
-                console.log('meow')
             }, function (error) {
                 $scope.status = 'Unable to get photos: ' + error.message;
             });
-
 
         ctrl.runSearch = function () {
             imageService.search(ctrl.filterText)
@@ -98,7 +91,6 @@
             $anchorScroll();
         };
 
-
         ctrl.zoom = function (index) {
             var elem = "view-" + index;
             var imageId = document.getElementById(elem);
@@ -108,6 +100,18 @@
                 angular.element(imageId).parent().children().removeClass('expand');
                 angular.element(imageId).addClass('expand');
             }
+        }
+
+        ctrl.hoverIn = function (index) {
+            var hoverItem = "view" + index;
+            var hoverId = document.getElementById(hoverItem);
+            angular.element(hoverId).addClass('hover')
+        }
+
+        ctrl.hoverOut = function (index) {
+            var hoverItem = "view" + index;
+            var hoverId = document.getElementById(hoverItem);
+            angular.element(hoverId).removeClass('hover')
         }
     }
 })();
